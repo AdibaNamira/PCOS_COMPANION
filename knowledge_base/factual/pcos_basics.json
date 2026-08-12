@@ -1,0 +1,363 @@
+{
+  "_meta": {
+    "description": "STARTER factual knowledge base. Each entry is a small, self-contained fact with a source note. This is NOT a complete medical KB. Do not add any fact here without a verifiable source.",
+    "review_status": "UNREVIEWED - starter content only",
+    "last_updated": "2026-08-06"
+  },
+  "entries": [
+    {
+      "id": "fact_001",
+      "topic": "diagnosis_criteria",
+      "question_examples": [
+        "how is PCOS diagnosed",
+        "what tests confirm PCOS",
+        "do I have PCOS"
+      ],
+      "content": "PCOS is typically diagnosed using the Rotterdam criteria. A diagnosis in adults generally requires at least two of these three: (1) irregular or absent ovulation, often showing up as irregular periods, (2) signs of high androgen levels, either from blood tests or physical signs like excess hair growth or acne, and (3) polycystic ovaries seen on ultrasound (or, in newer guidelines, elevated AMH hormone levels as an alternative to ultrasound). Doctors also rule out other conditions with similar symptoms, like thyroid problems, before confirming PCOS.",
+      "source_note": "Based on Rotterdam criteria as described in 2023 international evidence-based PCOS guideline and AAFP clinical reviews.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_002",
+      "topic": "common_symptoms",
+      "question_examples": [
+        "what are the symptoms of PCOS",
+        "signs of PCOS"
+      ],
+      "content": "Common symptoms of PCOS include irregular or missed periods, excess hair growth on the face or body, acne, thinning hair on the scalp, weight gain or difficulty losing weight, and fertility difficulties. Not everyone with PCOS has all of these symptoms, and severity varies a lot from person to person.",
+      "source_note": "General clinical consensus, consistent with AAFP and Rotterdam-criteria literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_003",
+      "topic": "insulin_resistance_link",
+      "question_examples": [
+        "does PCOS cause insulin resistance",
+        "PCOS and blood sugar"
+      ],
+      "content": "Many people with PCOS also have some degree of insulin resistance, where the body's cells don't respond to insulin as effectively. This is very common in PCOS and is part of why diet and physical activity are often discussed as part of managing it, alongside any medical treatment. It does not mean every person with PCOS will develop diabetes, but it is a recognized risk factor worth monitoring with a doctor.",
+      "source_note": "Well-established association in PCOS clinical literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_004",
+      "topic": "lifestyle_management",
+      "question_examples": [
+        "how to manage PCOS naturally",
+        "diet for PCOS"
+      ],
+      "content": "Lifestyle approaches often discussed for PCOS include balanced nutrition, regular physical activity, and stress management, since these can help with insulin sensitivity and hormone balance for some people. There is no single 'PCOS diet' proven best for everyone — some research points to Mediterranean-style eating patterns as helpful, but individual needs vary. This is general information, not a personal treatment plan.",
+      "source_note": "Consistent with recent PCOS management literature; explicitly framed as general, not prescriptive.",
+      "confidence": "medium",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_005",
+      "topic": "not_alone_prevalence",
+      "question_examples": [
+        "how common is PCOS",
+        "am I the only one with this"
+      ],
+      "content": "PCOS is one of the most common hormonal conditions affecting people with ovaries during their reproductive years, affecting a significant percentage of that population worldwide. It is common enough that most gynecologists and endocrinologists see it regularly.",
+      "source_note": "General epidemiological consensus in PCOS literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_006",
+      "topic": "period_pain_dysmenorrhea",
+      "question_examples": [
+        "does PCOS cause more period pain",
+        "are periods more painful with PCOS",
+        "period cramps and PCOS"
+      ],
+      "content": "Some research suggests period pain (dysmenorrhea) is reported more often by people with PCOS than in the general population, possibly related to irregular ovulation and differences in prostaglandin levels (chemicals involved in uterine contractions). However, findings vary between studies — some suggest the pain happens more often without necessarily being more intense, and not everyone with PCOS experiences more pain. Severe or worsening pelvic pain can also have other causes (like endometriosis), so it's worth mentioning to a doctor if it's a concern.",
+      "source_note": "Based on multiple clinical studies examining dysmenorrhea frequency and prostaglandin levels in PCOS patients; this remains an area with mixed findings, so kept intentionally hedged.",
+      "confidence": "medium",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_007",
+      "topic": "excess_hair_growth_hirsutism",
+      "question_examples": [
+        "why do I have facial hair",
+        "excess hair growth PCOS",
+        "hirsutism causes"
+      ],
+      "content": "Excess hair growth in a male-pattern distribution (face, chest, back, abdomen) is called hirsutism, and PCOS is its most common underlying cause, affecting roughly 5-10% of women overall and a majority of people with PCOS. It happens because of elevated androgen (like testosterone) levels. General approaches people discuss include cosmetic hair removal (shaving, waxing, threading, laser, electrolysis) and medical options a doctor can prescribe, such as certain hormonal medications, which work by reducing androgen effects and often take several months to show a noticeable difference.",
+      "source_note": "Based on Endocrine Society patient information and multiple clinical reviews on hirsutism and PCOS.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_008",
+      "topic": "scalp_hair_thinning",
+      "question_examples": [
+        "does PCOS cause hair loss",
+        "scalp hair thinning PCOS",
+        "why is my hair thinning"
+      ],
+      "content": "PCOS can also cause thinning of scalp hair, known as androgenic (or female-pattern) alopecia, in a meaningful proportion of patients. This usually shows up as gradual thinning at the crown and widening of the part line, while the front hairline generally stays intact, unlike some other causes of hair loss. It happens through a similar androgen-related mechanism as excess body hair. It's a common and often distressing symptom worth raising with a doctor or dermatologist, since there are approaches that can help slow or manage it.",
+      "source_note": "Based on multiple clinical and dermatology sources on androgenic alopecia in PCOS patients.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_009",
+      "topic": "fertility_and_conception",
+      "question_examples": [
+        "can I get pregnant with PCOS",
+        "does PCOS cause infertility",
+        "PCOS and fertility"
+      ],
+      "content": "PCOS is one of the most common causes of ovulation-related infertility, because irregular or absent ovulation makes it harder to predict or achieve conception. However, a PCOS diagnosis does NOT mean someone cannot get pregnant — many people with PCOS conceive naturally, especially with milder symptoms or after lifestyle changes, and those who need help have several fertility treatment options available with generally good success rates. It's very individual, so a fertility specialist can give guidance based on someone's specific situation.",
+      "source_note": "Based on multiple reproductive medicine and fertility clinic sources; kept general and non-prescriptive given how individual this topic is.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_021",
+      "topic": "menstrual_cycle_phases_basic",
+      "question_examples": [
+        "how many phases are there in the menstrual cycle",
+        "what are the phases of the menstrual cycle",
+        "stages of the menstrual cycle",
+        "what is the follicular phase",
+        "what is the luteal phase"
+      ],
+      "content": "The menstrual cycle has four phases: (1) Menstrual phase — your period, when the uterine lining sheds, typically lasting 3-7 days; (2) Follicular phase — starts on day 1 of your period (overlapping with it) and lasts until ovulation, when rising estrogen helps an egg mature and the uterine lining rebuilds; (3) Ovulation — when a mature egg is released, usually once per cycle, roughly midway through; (4) Luteal phase — from after ovulation until your next period starts, when progesterone rises to prepare the uterine lining, and if pregnancy doesn't occur, hormone levels drop and the cycle restarts. A 'typical' cycle is often cited as 28 days, but a normal range is considered roughly 21-35 days, and cycle length commonly varies cycle to cycle — this is especially true with PCOS, where cycles are often longer or less predictable.",
+      "source_note": "Standard reproductive physiology, consistent across multiple clinical/patient-education sources (e.g. Kaiser Permanente, Cleveland Clinic-affiliated OB/GYN practices, NCBI Endotext reference).",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_022",
+      "topic": "what_is_a_period_definition",
+      "question_examples": [
+        "what is a period",
+        "what is menstruation",
+        "what does having a period mean"
+      ],
+      "content": "A period (menstruation) is when the lining of the uterus, which built up in preparation for a possible pregnancy, sheds and leaves the body through the vagina as a mix of blood, tissue, and mucus. It happens roughly once a month for most people with a uterus, from the first period (menarche) until menopause, except during pregnancy or certain medical situations. Getting a period is a normal, healthy sign that the reproductive system is functioning, not something to feel embarrassed about.",
+      "source_note": "Standard reproductive physiology, consistent across multiple clinical/patient-education sources (Cleveland Clinic, Flo Health, MedlinePlus).",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_023",
+      "topic": "first_period_menarche",
+      "question_examples": [
+        "when do periods start",
+        "what age do you get your first period",
+        "what is menarche"
+      ],
+      "content": "A first period is called menarche. It typically happens between ages 10 and 16, with the average around 12-13, usually about two years after other puberty changes begin. It's common for the first year or two of periods to be irregular or unpredictable in timing and flow as the body adjusts — this is normal and doesn't necessarily mean something is wrong. If periods haven't started by age 15, or there's no sign of puberty starting by around age 13, it's worth checking in with a doctor.",
+      "source_note": "Based on multiple clinical sources including Cleveland Clinic and NCBI/StatPearls physiology reference.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_024",
+      "topic": "what_is_normal_period",
+      "question_examples": [
+        "what is a normal period like",
+        "how long should a period last",
+        "how long is a normal cycle"
+      ],
+      "content": "There's a range considered typical, not one single 'normal': a period usually lasts 2-7 days, and a full menstrual cycle (from the first day of one period to the first day of the next) is usually 21-35 days, with 28 days often cited as an average — though only a minority of people have exactly 28-day cycles, so noticeable variation is common and not automatically a concern. Bleeding is usually heaviest in the first few days. Cycle length can also change over time due to age, stress, weight changes, or health conditions like PCOS. What matters most is knowing what's typical for your own body, so you can notice if something changes.",
+      "source_note": "Based on multiple clinical sources including ACOG (American College of Obstetricians and Gynecologists) and general reproductive physiology references.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_025",
+      "topic": "menopause_when_periods_stop",
+      "question_examples": [
+        "when do periods stop",
+        "what age is menopause",
+        "when does menstruation end"
+      ],
+      "content": "Periods stop permanently at menopause, which happens naturally on average around age 51-52, with a typical range of roughly 45-55. Menopause is officially confirmed after a full 12 months without any period (including spotting). Before that, there's often a transition period called perimenopause, lasting a few years, where periods become irregular before stopping completely. Menopause before age 40 is considered early/premature and is usually worth discussing with a doctor.",
+      "source_note": "Based on multiple clinical sources including the U.S. Office on Women's Health and MedlinePlus.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_026",
+      "topic": "missed_or_absent_periods_reasons",
+      "question_examples": [
+        "why did i miss my period",
+        "reasons for no period",
+        "what is amenorrhea",
+        "why did my period stop"
+      ],
+      "content": "A missed or absent period (called amenorrhea) can have many possible causes, some completely normal and some worth checking with a doctor. Normal/expected reasons include pregnancy, breastfeeding, and menopause. Other common causes include PCOS, high stress, significant weight changes (gain or loss), excessive exercise, certain hormonal birth control, thyroid issues, and some medical conditions affecting the hypothalamus or pituitary gland. A single late or missed period often isn't cause for alarm, but going 3 months or more without a period (when not pregnant, breastfeeding, or menopausal) is generally worth discussing with a doctor, since there are many possible underlying causes that benefit from a proper evaluation.",
+      "source_note": "Based on multiple clinical sources including ACOG and Cleveland Clinic guidance on amenorrhea.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_027",
+      "topic": "pcos_renamed_pmos",
+      "question_examples": [
+        "is pcos being renamed",
+        "what is pmos",
+        "did pcos change its name",
+        "pcos new name"
+      ],
+      "content": "As of May 2026, PCOS was officially renamed 'Polyendocrine Metabolic Ovarian Syndrome' (PMOS), following an international consensus process published in The Lancet and backed by over 50 patient and professional organizations, including the Endocrine Society. The reasoning: the old name overemphasized ovarian cysts, which aren't actually present in every patient and aren't the defining feature of the condition, and the new name better reflects that it's a broader hormonal and metabolic condition affecting the whole body. Importantly, a person's diagnosis itself hasn't changed — only the name — and there's an official multi-year transition period, so 'PCOS' will remain a widely used, valid, and understood term for a long while yet. Both names currently refer to exactly the same condition.",
+      "source_note": "Based on the official global consensus paper (The Lancet, May 2026) and confirming statements from the Endocrine Society and Yale Medicine.",
+      "confidence": "high",
+      "requires_clinician_review": false
+    },
+    {
+      "id": "fact_010",
+      "topic": "mental_health_link",
+      "question_examples": [
+        "does PCOS cause anxiety",
+        "PCOS and depression",
+        "why do I feel so anxious with PCOS"
+      ],
+      "content": "Research consistently shows anxiety and depression are reported significantly more often in people with PCOS than in the general population — some studies suggest several times more often. This seems to come from a mix of factors: hormonal effects on mood regulation, the emotional impact of symptoms like body image changes or fertility concerns, and broader social/cultural pressures. This connection is well recognized in medical literature, and many clinicians recommend mental health screening alongside physical PCOS care. It's not 'just in your head' — it's a real, documented part of the condition worth discussing openly with a doctor or therapist.",
+      "source_note": "Based on multiple meta-analyses and clinical reviews on PCOS, anxiety, and depression prevalence.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_011",
+      "topic": "long_term_health_risks",
+      "question_examples": [
+        "what are the long term risks of PCOS",
+        "does PCOS increase cancer risk",
+        "PCOS and diabetes risk"
+      ],
+      "content": "Beyond day-to-day symptoms, PCOS is associated with some increased long-term health risks if left unmanaged, including type 2 diabetes, cardiovascular issues (like high blood pressure and cholesterol), and a higher risk of endometrial cancer (linked to infrequent periods causing the uterine lining to build up without regular shedding). This can sound alarming, but the key point in the research is that most of these risks are meaningfully reducible through regular checkups, monitoring, and management — this is exactly why doctors often recommend ongoing care for PCOS rather than only addressing individual symptoms.",
+      "source_note": "Based on multiple clinical reviews on long-term PCOS health outcomes; framed to inform without causing alarm, consistent with the emphasis on modifiability found in the source literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_012",
+      "topic": "common_lab_terms_general",
+      "question_examples": [
+        "what does my PCOS report mean",
+        "what is AMH",
+        "what does LH FSH ratio mean"
+      ],
+      "content": "Some terms that commonly show up on PCOS-related lab reports, explained in general terms only: androgens/testosterone (hormones that are often elevated in PCOS), LH and FSH (two hormones involved in ovulation — in PCOS, the ratio between them is sometimes elevated, though this isn't required for diagnosis), and AMH (anti-Müllerian hormone, which reflects ovarian egg reserve and tends to run higher in PCOS). IMPORTANT: this is general background only, not an interpretation of any specific person's results — actual lab values need to be read by a doctor alongside someone's full history and other test results, since normal ranges and what a result means for an individual varies.",
+      "source_note": "General clinical terminology; deliberately does not interpret or offer to interpret any individual's lab values, only defines the terms.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_013",
+      "topic": "weight_and_pcos",
+      "question_examples": [
+        "why is it hard to lose weight with PCOS",
+        "PCOS and weight gain"
+      ],
+      "content": "Many people with PCOS find weight management more difficult, largely connected to insulin resistance, which can make the body more prone to storing fat and can increase appetite/cravings for some people. Not everyone with PCOS is overweight, though — it varies widely. Research suggests even a modest weight change (around 5-10% of body weight, for those who carry excess weight) can meaningfully improve androgen levels, cycle regularity, and other symptoms, though this isn't necessary or relevant for everyone with PCOS.",
+      "source_note": "Based on multiple clinical and fertility-medicine sources discussing weight and PCOS symptom management.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_014",
+      "topic": "acne_and_pcos",
+      "question_examples": [
+        "does PCOS cause acne",
+        "PCOS acne"
+      ],
+      "content": "Persistent acne, especially along the jawline, chin, and neck, is a common PCOS symptom, driven by the same elevated androgen levels that also cause excess hair growth and hair thinning in many patients. It often responds to a combination of skincare and, when needed, medical treatments a dermatologist or doctor can recommend based on severity.",
+      "source_note": "Consistent with general PCOS symptom literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_015",
+      "topic": "what_is_pcos_definition",
+      "question_examples": [
+        "what does PCOS stand for",
+        "what is the full form of PCOS",
+        "what is PCOS",
+        "meaning of PCOS",
+        "full meaning of PCOS"
+      ],
+      "content": "PCOS stands for Polycystic Ovary Syndrome. It's a common hormonal condition affecting people with ovaries, typically involving a combination of irregular ovulation, elevated androgen (male-pattern) hormone levels, and often (though not always) multiple small follicles on the ovaries. It affects people differently, so symptoms and experiences vary a lot from person to person.",
+      "source_note": "Standard medical terminology and definition consistent with Rotterdam criteria literature.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_020",
+      "topic": "pcod_vs_pcos_distinction",
+      "question_examples": [
+        "what is pcod",
+        "is pcod the same as pcos",
+        "difference between pcod and pcos",
+        "pcod meaning"
+      ],
+      "content": "PCOD (Polycystic Ovarian Disease) and PCOS (Polycystic Ovary Syndrome) are related but not identical — they're often confused or used interchangeably, but many medical sources, especially in South Asian healthcare contexts, describe them as distinct. PCOD generally refers to a condition where the ovaries release many immature eggs that can form small cysts, often considered more common and typically more manageable through lifestyle changes alone. PCOS is usually described as a broader, more complex hormonal and metabolic condition affecting the whole body, not just the ovaries, with more significant long-term health considerations (like insulin resistance and cardiovascular risk). The exact terminology and distinction can vary by region and healthcare provider, so if you've been told you have one or the other, it's worth asking your doctor specifically what that means for you.",
+      "source_note": "Based on multiple clinical/patient-education sources distinguishing PCOD and PCOS, including South Asian health institutions (Apollo Hospitals, UNICEF India) that treat these as related but distinct conditions.",
+      "confidence": "medium",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_016",
+      "topic": "treatment_options_overview",
+      "question_examples": [
+        "what treatments are there for PCOS",
+        "how is PCOS treated",
+        "treatment options for PCOS",
+        "medications for PCOS"
+      ],
+      "content": "There's no single approved medication specifically for PCOS, but several treatments are commonly used off-label to manage different symptoms. Combined birth control pills are often used to regulate periods and reduce excess hair growth or acne. Metformin, typically used for diabetes, is commonly used off-label to help with insulin resistance. Anti-androgen medications can help with hair growth and acne. For those trying to conceive, medications like letrozole are often used to help with ovulation. Every treatment has different benefits and possible side effects, and the right choice depends heavily on someone's specific symptoms and goals — this is very individual and needs a doctor's guidance, not a general recommendation.",
+      "source_note": "Based on multiple clinical treatment-overview sources (GoodRx clinical review, international PCOS treatment guideline literature). Deliberately excludes any dosage information.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_017",
+      "topic": "is_pcos_lifelong",
+      "question_examples": [
+        "does PCOS go away",
+        "will PCOS go away after menopause",
+        "is PCOS permanent",
+        "is PCOS lifelong"
+      ],
+      "content": "PCOS is generally considered a lifelong condition — it doesn't fully go away, including after menopause. What changes is how it shows up: period-related symptoms naturally resolve after menopause since ovulation stops, but underlying effects like insulin resistance and elevated androgens, along with related long-term health risks, tend to persist and are still worth monitoring with a doctor over time. This can feel discouraging to hear, but ongoing management (not a one-time fix) is the normal, expected approach for PCOS at any age.",
+      "source_note": "Based on multiple clinical reviews on PCOS and menopause/aging.",
+      "confidence": "high",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_018",
+      "topic": "pcos_phenotypes_types",
+      "question_examples": [
+        "are there different types of PCOS",
+        "PCOS phenotypes",
+        "what kind of PCOS do I have"
+      ],
+      "content": "PCOS isn't one-size-fits-all — doctors sometimes describe it in terms of different combinations of the three main diagnostic features (irregular ovulation, elevated androgens, and polycystic ovarian appearance on ultrasound), since a person can have any two of the three. This means two people can both have PCOS but experience quite different symptoms. This is sometimes referred to informally as different 'phenotypes,' though the exact classification and treatment implications are still an active area of research and best discussed with a doctor for your specific case.",
+      "source_note": "Based on Rotterdam-criteria phenotype literature.",
+      "confidence": "medium",
+      "requires_clinician_review": true
+    },
+    {
+      "id": "fact_019",
+      "topic": "supplements_inositol",
+      "question_examples": [
+        "do supplements help with PCOS",
+        "does inositol help PCOS",
+        "vitamins for PCOS"
+      ],
+      "content": "Inositol (particularly myo-inositol) is one of the more researched supplements for PCOS, with some studies suggesting it may help with insulin sensitivity and cycle regularity, though evidence is still considered more limited than for established prescription treatments. Supplements generally aren't regulated as strictly as prescription medications, and can still have side effects or interact with other medications. If considering any supplement, it's important to talk to a doctor first, especially since it could interact with something else being taken.",
+      "source_note": "Based on multiple clinical sources reviewing supplement evidence for PCOS, including comparative reviews of inositol.",
+      "confidence": "medium",
+      "requires_clinician_review": true
+    }
+  ]
+}

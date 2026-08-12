@@ -1,0 +1,96 @@
+{
+  "_meta": {
+    "description": "Tunable settings for the Response Planner. These starting values are reasonable first guesses, NOT final numbers — they should be adjusted once you test with more real patient-style messages (or better, real participant testing). Nothing here needs a code change to tune, just edit this file.",
+    "last_updated": "2026-08-05"
+  },
+  "question_keywords": [
+    "how",
+    "what",
+    "why",
+    "when",
+    "is it true",
+    "does",
+    "can",
+    "should i",
+    "is it",
+    "are there",
+    "what is",
+    "how do",
+    "how does",
+    "true that"
+  ],
+  "emotion_keywords": [
+    "feel",
+    "feeling",
+    "felt",
+    "sad",
+    "scared",
+    "afraid",
+    "worried",
+    "anxious",
+    "anxiety",
+    "hate",
+    "ugly",
+    "alone",
+    "lonely",
+    "frustrated",
+    "frustrating",
+    "overwhelmed",
+    "hopeless",
+    "give up",
+    "giving up",
+    "upset",
+    "angry",
+    "cry",
+    "crying",
+    "depressed",
+    "stressed",
+    "stress",
+    "hurt",
+    "ashamed",
+    "embarrassed",
+    "confidence",
+    "insecure"
+  ],
+  "high_risk_keywords": [
+    "dosage",
+    "dose",
+    "mg",
+    "milligram",
+    "how much medication",
+    "how many pills",
+    "prescription",
+    "how much metformin",
+    "birth control brand",
+    "which medication",
+    "drug interaction",
+    "how often should i take",
+    "overdose",
+    "stop taking my medication",
+    "what medications should i take",
+    "which medication should i take",
+    "what medicine should i take",
+    "what should i take for",
+    "what pills should i take"
+  ],
+  "thresholds": {
+    "factual_confident": 0.25,
+    "factual_weak": 0.12,
+    "empathetic_present": 0.15
+  },
+  "default_ratios": {
+    "emotional_intent": {
+      "factual": 0.05,
+      "empathetic": 0.95
+    },
+    "mixed_intent": {
+      "factual": 0.45,
+      "empathetic": 0.55
+    },
+    "factual_intent": {
+      "factual": 0.7,
+      "empathetic": 0.3
+    }
+  },
+  "minimum_empathetic_floor": 0.15
+}
