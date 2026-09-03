@@ -80,19 +80,6 @@ def get_latest_period_start(device_id):
     return history[0] if history else None
 
 
-def delete_period_entry(device_id, period_start_date_str):
-    """Remove a single mis-logged date without wiping the whole history."""
-    conn = _get_connection()
-    try:
-        conn.execute(
-            "DELETE FROM period_logs WHERE device_id = ? AND period_start_date = ?",
-            (device_id, period_start_date_str),
-        )
-        conn.commit()
-    finally:
-        conn.close()
-
-
 def delete_history(device_id):
     conn = _get_connection()
     try:
@@ -100,4 +87,3 @@ def delete_history(device_id):
         conn.commit()
     finally:
         conn.close()
-        

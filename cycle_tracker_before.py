@@ -94,12 +94,7 @@ def compute_cycle_context(last_period_start_str, avg_cycle_length=28):
         phase = "luteal"
 
     cycles_passed = days_since // avg_cycle_length
-    # NOTE: this was (cycles_passed + 1) * avg_cycle_length, which is always
-    # greater than days_since by construction - so the "late period" branch
-    # below could never fire. Using the MOST RECENT expected start (at least
-    # one full cycle in) makes lateness detectable, while max(1, ...) stops
-    # someone on day 6 of a normal cycle being told they're late.
-    expected_next_period_day_count = max(1, cycles_passed) * avg_cycle_length
+    expected_next_period_day_count = (cycles_passed + 1) * avg_cycle_length
     days_late = 0
     if days_since > expected_next_period_day_count + GRACE_DAYS_BEFORE_LATE:
         days_late = days_since - expected_next_period_day_count
