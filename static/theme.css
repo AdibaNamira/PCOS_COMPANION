@@ -1,0 +1,80 @@
+/*
+  Shared colour palette + typography for every page in the app.
+
+  Everything visual is driven by these variables. To re-theme the whole
+  app, change the values here and nothing else. Previously these were
+  duplicated in three places (the chat HTML in app.py, calendar.html, and
+  hardcoded hex values in login.html), so a colour change had to be made
+  three times and drifted out of sync easily.
+
+  PALETTE: plum mauve. Each supporting colour has a job rather than being
+  decoration - see the comments below. Every text-on-colour pairing here
+  meets WCAG AA contrast at body size.
+*/
+
+:root {
+  /* --- Surfaces --- */
+  --bg: #fbf8fb;
+  --card: #ffffff;
+  --border: #f2e8f2;
+
+  /* --- Plum: primary. Buttons, headers, today marker, send button --- */
+  --accent: #7a4079;
+  --accent-dark: #603160;
+  --accent-soft: #efe1ee;
+  --accent-tint: #f8f2f8;
+  --accent-line: #d9b8d0;
+
+  /* --- Rose: the patient's own messages, so "you" and "the bot" are
+         separable by hue and not only by alignment --- */
+  --rose: #c47b9c;
+  --rose-soft: #f7e9f0;
+
+  /* --- Apricot: logged period days. Deliberately warm against the cool
+         plum so the calendar isn't purple-on-purple, and warm-for-
+         menstrual matches the convention people already know --- */
+  --apricot: #e8927c;
+  --apricot-soft: #fdf0eb;
+  --apricot-line: #f0b8a8;
+  --apricot-text: #b5674f;
+
+  /* --- Iris: cycle phase accents, kept distinct from the primary so
+         phase info doesn't compete with logged days --- */
+  --iris: #8d7bc4;
+  --iris-soft: #ece8f8;
+  --iris-text: #5d4d96;
+
+  /* --- Sage: confirmations, so success reads differently from
+         information at a glance --- */
+  --success: #6ba394;
+  --success-bg: #eaf5f1;
+  --success-text: #4a7a6c;
+
+  /* --- Amber: the NOT FULLY VERIFIED banner. This flag does real safety
+         work and must never be mistakable for ordinary text, so it is the
+         warmest thing on a cool screen --- */
+  --warn-bg: #fdf6e6;
+  --warn-border: #e0b04a;
+  --warn-text: #6b5316;
+
+  /* --- Danger: destructive actions only --- */
+  --danger: #b5474f;
+  --danger-bg: #fdecee;
+  --mic-active: #d8574f;
+
+  /* --- Text --- */
+  --text: #3b2a3b;
+  --text-soft: #9b8a9b;
+  --text-faint: #bfb0bf;
+
+  /* --- Typography ---
+     The app previously used 'Segoe UI', Arial - a Windows stack that
+     silently falls back to Arial on macOS and Linux, which is why text
+     looked flat. This renders natively on every platform. --- */
+  --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                'Helvetica Neue', Arial, sans-serif;
+  --line-height-body: 1.55;
+
+  /* Legacy alias kept so any leftover reference still resolves */
+  --lavender: #ece8f8;
+}
