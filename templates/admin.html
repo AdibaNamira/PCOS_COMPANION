@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research dashboard — PCOS Companion</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: var(--font-stack); background: var(--bg); color: var(--text);
+         margin: 0; padding: 24px; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  h1 { font-size: 1.25em; margin: 0; }
+  .sub { font-size: 0.8em; color: var(--text-soft); margin-bottom: 20px; }
+  header a { margin-left: auto; font-size: 0.82em; color: var(--accent); text-decoration: none; }
+
+  .banner { background: var(--warn-bg); border-left: 4px solid var(--warn-border);
+            color: var(--warn-text); padding: 11px 14px; border-radius: 0 10px 10px 0;
+            font-size: 0.8em; line-height: 1.5; margin-bottom: 20px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+           gap: 10px; margin-bottom: 22px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+          padding: 13px 15px; }
+  .stat .v { font-size: 1.5em; font-weight: 600; }
+  .stat .l { font-size: 0.72em; color: var(--text-soft); margin-top: 2px; line-height: 1.35; }
+
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+           padding: 16px 18px; margin-bottom: 18px; }
+  .panel h2 { font-size: 0.92em; margin: 0 0 12px; }
+  .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  button { border: none; border-radius: 9px; padding: 8px 14px; font-size: 0.8em;
+           cursor: pointer; font-family: inherit; background: var(--accent); color: #fff; }
+  button:hover { background: var(--accent-dark); }
+  button.ghost { background: var(--card); border: 1px solid var(--accent-line); color: var(--accent); }
+  a.dl { text-decoration: none; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+  th { text-align: left; font-weight: 600; color: var(--text-soft); font-size: 0.88em;
+       padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  td { padding: 8px; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: var(--accent-tint); }
+  td.id { font-weight: 600; }
+  td .em { font-size: 0.88em; color: var(--text-soft); }
+  .hidden { display: none; }
+
+  #transcript { max-height: 460px; overflow-y: auto; }
+  .turn { margin-bottom: 14px; }
+  .turn .u { background: var(--rose-soft); border-radius: 10px; padding: 8px 11px;
+             font-size: 0.84em; margin-bottom: 5px; }
+  .turn .b { background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+             padding: 8px 11px; font-size: 0.84em; white-space: pre-wrap; }
+  .turn .b.flag { background: var(--warn-bg); border-color: var(--warn-border); }
+  .turn .t { font-size: 0.68em; color: var(--text-faint); margin-bottom: 3px; }
+  .empty { color: var(--text-soft); font-size: 0.85em; }
+  code { background: var(--accent-tint); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Research dashboard</h1>
+    <a href="/">← Back to app</a>
+  </header>
+  <div class="sub">Participant data for behavioural analysis</div>
+
+  <div class="banner">
+    Participants are shown as study IDs. Reveal emails only when you have a specific
+    reason to — analysis rarely needs identity, and an open screen showing real addresses
+    beside health conversations is the easiest way to breach someone's confidentiality.
+    This data is only usable in research your participants consented to.
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="panel">
+    <h2>Participants</h2>
+    <div class="row">
+      <button class="ghost" id="toggle-emails">Reveal emails</button>
+      <a class="dl" href="/admin/export.csv"><button>Download CSV (pseudonymised)</button></a>
+    </div>
+    <table>
+      <thead><tr><th>ID</th><th>Messages</th><th>Flagged</th><th>Joined</th><th>Last active</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2 id="tr-title">Transcript</h2>
+    <div id="transcript"><div class="empty">Select a participant above.</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Message patterns</h2>
+    <div id="patterns" class="empty">Loading…</div>
+  </div>
+</div>
+
+<script>
+let showEmails = false;
+let cache = null;
+
+function fmt(ts) {
+  if (!ts) return '—';
+  return ts.slice(0, 10);
+}
+
+async function load() {
+  const res = await fetch('/admin/data');
+  if (!res.ok) { document.body.innerHTML = '<p>Not available.</p>'; return; }
+  cache = await res.json();
+
+  const o = cache.overview;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="v">${o.total_users}</div><div class="l">Accounts</div></div>
+    <div class="stat"><div class="v">${o.active_users}</div><div class="l">Sent at least one message</div></div>
+    <div class="stat"><div class="v">${o.total_messages}</div><div class="l">Total messages</div></div>
+    <div class="stat"><div class="v">${o.avg_messages_per_active_user}</div><div class="l">Avg per active participant</div></div>
+    <div class="stat"><div class="v">${o.flagged_messages} <span style="font-size:0.6em;color:var(--text-soft)">(${o.flagged_pct}%)</span></div><div class="l">Flagged (fallback / crisis / blocked)</div></div>
+    <div class="stat"><div class="v">${o.tracking_users}</div><div class="l">Using cycle tracking</div></div>
+    <div class="stat"><div class="v">${o.period_logs}</div><div class="l">Period dates logged</div></div>
+    <div class="stat"><div class="v">${o.support_contacts}</div><div class="l">Support contacts saved</div></div>
+    <div class="stat"><div class="v">${o.support_alerts}</div><div class="l">Support alerts sent</div></div>
+  `;
+
+  renderRows();
+
+  const m = cache.message_lengths;
+  const words = cache.first_words.map(([w, c]) => `<code>${w}</code> ${c}`).join(' · ');
+  document.getElementById('patterns').innerHTML = m.count
+    ? `<div style="font-size:0.85em;line-height:1.7">
+         Average message length: <strong>${m.avg_words} words</strong> (median ${m.median_words}).<br>
+         Most common opening words: ${words || '—'}
+       </div>`
+    : '<span class="empty">No messages yet.</span>';
+}
+
+function renderRows() {
+  const tb = document.getElementById('rows');
+  tb.innerHTML = '';
+  if (!cache.participants.length) {
+    tb.innerHTML = '<tr><td colspan="6" class="empty">No participants yet.</td></tr>';
+    return;
+  }
+  cache.participants.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="id">${p.study_id}${showEmails ? `<div class="em">${p.email}</div>` : ''}</td>
+      <td>${p.messages}</td>
+      <td>${p.flagged}</td>
+      <td>${fmt(p.created_at)}</td>
+      <td>${fmt(p.last_message)}</td>
+      <td><button class="ghost" data-id="${p.id}" data-sid="${p.study_id}">View</button></td>
+    `;
+    tr.querySelector('button').onclick = e =>
+      viewTranscript(e.target.dataset.id, e.target.dataset.sid);
+    tb.appendChild(tr);
+  });
+}
+
+async function viewTranscript(userId, sid) {
+  const box = document.getElementById('transcript');
+  document.getElementById('tr-title').textContent = `Transcript — ${sid}`;
+  box.innerHTML = '<div class="empty">Loading…</div>';
+  const res = await fetch('/admin/transcript/' + userId);
+  const data = await res.json();
+  if (!data.messages.length) { box.innerHTML = '<div class="empty">No messages.</div>'; return; }
+  box.innerHTML = data.messages.map(t => `
+    <div class="turn">
+      <div class="t">${t.created_at.replace('T', ' ').slice(0, 16)}</div>
+      <div class="u">${escapeHtml(t.patient_message)}</div>
+      <div class="b${t.flagged ? ' flag' : ''}">${escapeHtml(t.bot_response)}</div>
+    </div>`).join('');
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+document.getElementById('toggle-emails').onclick = e => {
+  showEmails = !showEmails;
+  e.target.textContent = showEmails ? 'Hide emails' : 'Reveal emails';
+  renderRows();
+};
+
+load();
+</script>
+</body>
+</html>

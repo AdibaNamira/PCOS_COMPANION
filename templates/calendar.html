@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle Calendar — PCOS Companion</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-stack); background: var(--bg); margin: 0;
+    color: var(--text); display: flex; justify-content: center; padding: 0 0 40px;
+  }
+  #page { width: 100%; max-width: 600px; background: var(--card); min-height: 100vh;
+          box-shadow: 0 0 40px rgba(0,0,0,0.05); }
+  header { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex;
+           align-items: center; gap: 12px; }
+  header .title { font-size: 1.15em; font-weight: 600; }
+  header a.back { margin-left: auto; font-size: 0.85em; color: var(--accent-dark);
+                  text-decoration: none; padding: 6px 12px; border-radius: 10px; }
+  header a.back:hover { background: var(--accent-soft); }
+
+  .section { padding: 18px 22px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-size: 0.95em; margin: 0 0 12px; font-weight: 600; }
+
+  /* --- month grid --- */
+  .month-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .month-nav button { border: 1px solid var(--border); background: var(--bg); cursor: pointer;
+                      border-radius: 10px; padding: 6px 13px; font-size: 1em; color: var(--text); }
+  .month-nav button:hover { background: var(--accent-soft); }
+  .month-label { font-weight: 600; font-size: 1em; }
+  .weekdays, .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .weekdays div { text-align: center; font-size: 0.72em; color: var(--text-soft);
+                  padding-bottom: 6px; font-weight: 600; }
+  .day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+         border-radius: 10px; font-size: 0.85em; cursor: pointer; position: relative;
+         border: 1px solid transparent; }
+  .day.empty { cursor: default; }
+  .day:not(.empty):hover { background: var(--accent-tint); }
+  .day.today { border-color: var(--accent); font-weight: 700; }
+  .day.logged { background: var(--apricot); color: #fff; font-weight: 600; }
+  .day.logged:hover { background: var(--apricot-text); }
+  .day.predicted { background: repeating-linear-gradient(45deg, var(--apricot-soft), var(--apricot-soft) 4px, #fff 4px, #fff 8px);
+                   border-color: var(--apricot-line); color: var(--apricot-text); }
+  .day.future { color: var(--text-faint); }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; font-size: 0.75em;
+            color: var(--text-soft); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 13px; height: 13px; border-radius: 4px; display: inline-block; }
+  .swatch.logged { background: var(--apricot); }
+  .swatch.predicted { background: repeating-linear-gradient(45deg, var(--apricot-soft), var(--apricot-soft) 3px, #fff 3px, #fff 6px);
+                      border: 1px solid var(--apricot-line); }
+  .swatch.today { border: 2px solid var(--accent); }
+
+  /* --- summary --- */
+  .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 120px; background: var(--accent-tint); border-radius: 12px; padding: 12px 14px; }
+  .stat .value { font-size: 1.25em; font-weight: 600; }
+  .stat .label { font-size: 0.72em; color: var(--text-soft); margin-top: 2px; }
+
+  /* --- log form --- */
+  .row { display: flex; gap: 10px; align-items: flex-end; }
+  .row label { font-size: 0.8em; color: var(--text-soft); display: flex; flex-direction: column;
+               gap: 5px; flex: 1; }
+  input[type=date] { padding: 9px 11px; border-radius: 10px; border: 1px solid var(--border);
+                     font-size: 0.9em; font-family: inherit; }
+  button.primary { padding: 10px 18px; border-radius: 12px; border: none; background: var(--accent);
+                   color: #fff; cursor: pointer; font-size: 0.87em; height: 38px; font-family: inherit; }
+  button.primary:hover { background: var(--accent-dark); }
+  button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* --- history list --- */
+  ul.history { list-style: none; padding: 0; margin: 0; }
+  ul.history li { display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+                  border-radius: 10px; font-size: 0.88em; }
+  ul.history li:nth-child(odd) { background: var(--bg); }
+  ul.history .gap { margin-left: auto; font-size: 0.8em; color: var(--text-soft); }
+  ul.history .del { border: none; background: transparent; cursor: pointer; color: var(--text-faint);
+                    font-size: 1em; padding: 2px 6px; border-radius: 6px; }
+  ul.history .del:hover { background: var(--danger-bg); color: var(--danger); }
+  .empty-note { font-size: 0.85em; color: var(--text-soft); }
+  .note { font-size: 0.75em; color: var(--text-soft); line-height: 1.5; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div id="page">
+  <header>
+    <div class="title">📅 Cycle Calendar</div>
+    <a class="back" href="/">← Back to chat</a>
+  </header>
+
+  <div class="section">
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="section">
+    <div class="month-nav">
+      <button id="prev-month" aria-label="Previous month">‹</button>
+      <div class="month-label" id="month-label"></div>
+      <button id="next-month" aria-label="Next month">›</button>
+    </div>
+    <div class="weekdays">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="days" id="days"></div>
+    <div class="legend">
+      <span><i class="swatch logged"></i> Logged period start</span>
+      <span><i class="swatch predicted"></i> Estimated next start</span>
+      <span><i class="swatch today"></i> Today</span>
+    </div>
+    <div class="note">Tap any past date to log it as a period start. Estimates are based on your own
+      logged history — PCOS cycles are often irregular, so treat them as a rough guide, not a prediction.</div>
+  </div>
+
+  <div class="section">
+    <h2>Log a period start</h2>
+    <div class="row">
+      <label>Date
+        <input type="date" id="log-date">
+      </label>
+      <button class="primary" id="log-btn">Log period</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Previously logged dates</h2>
+    <ul class="history" id="history-list"></ul>
+    <div class="empty-note" id="history-empty">Nothing logged yet.</div>
+  </div>
+</div>
+
+<script>
+const MONTHS = ['January','February','March','April','May','June','July',
+                'August','September','October','November','December'];
+
+let state = { history: [], projected: [], today: null, data: {} };
+let viewYear, viewMonth;
+
+function iso(y, m, d) {
+  return `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
+function prettyDate(isoStr) {
+  const [y, m, d] = isoStr.split('-').map(Number);
+  return `${d} ${MONTHS[m - 1].slice(0, 3)} ${y}`;
+}
+
+async function load() {
+  const res = await fetch('/cycle_data');
+  if (res.status === 401) { window.location.href = '/login'; return; }
+  const data = await res.json();
+  state.data = data;
+  state.history = data.history || [];
+  state.projected = data.projected || [];
+  state.today = data.today;
+
+  if (viewYear === undefined) {
+    const [y, m] = data.today.split('-').map(Number);
+    viewYear = y; viewMonth = m - 1;
+  }
+  renderStats();
+  renderMonth();
+  renderHistory();
+}
+
+function renderStats() {
+  const d = state.data;
+  const el = document.getElementById('stats');
+  const phase = d.phase ? d.phase.charAt(0).toUpperCase() + d.phase.slice(1) : '—';
+  const avgLabel = d.has_enough_history ? 'Avg cycle (your history)' : 'Avg cycle (default)';
+  el.innerHTML = `
+    <div class="stat"><div class="value">${d.status === 'ok' ? phase : '—'}</div>
+      <div class="label">${d.status === 'ok' ? 'Day ' + d.cycle_day + ' of cycle' : 'No data yet'}</div></div>
+    <div class="stat"><div class="value">${d.avg_cycle_length} days</div>
+      <div class="label">${avgLabel}</div></div>
+    <div class="stat"><div class="value">${d.next_expected_date ? prettyDate(d.next_expected_date) : '—'}</div>
+      <div class="label">Next start (estimated)</div></div>
+  `;
+  if (d.days_late > 0) {
+    el.innerHTML += `<div class="stat" style="background:#fff6e0"><div class="value">${d.days_late} days</div>
+      <div class="label">Later than estimated — common with PCOS</div></div>`;
+  }
+}
+
+function renderMonth() {
+  document.getElementById('month-label').textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+  const firstWeekday = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const grid = document.getElementById('days');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < firstWeekday; i++) {
+    const blank = document.createElement('div');
+    blank.className = 'day empty';
+    grid.appendChild(blank);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = iso(viewYear, viewMonth, d);
+    const cell = document.createElement('div');
+    cell.className = 'day';
+    cell.textContent = d;
+
+    if (state.history.includes(dateStr)) cell.classList.add('logged');
+    else if (state.projected.includes(dateStr)) cell.classList.add('predicted');
+    if (dateStr === state.today) cell.classList.add('today');
+    if (dateStr > state.today) cell.classList.add('future');
+
+    cell.title = state.history.includes(dateStr)
+      ? 'Logged period start — tap to remove'
+      : (dateStr > state.today ? 'Future date' : 'Tap to log as period start');
+
+    cell.onclick = () => onDayClick(dateStr);
+    grid.appendChild(cell);
+  }
+}
+
+async function onDayClick(dateStr) {
+  if (dateStr > state.today) {
+    alert("You can't log a period start in the future.");
+    return;
+  }
+  if (state.history.includes(dateStr)) {
+    if (confirm(`Remove the logged period start on ${prettyDate(dateStr)}?`)) {
+      await fetch('/cycle_delete', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({period_start_date: dateStr})
+      });
+      await load();
+    }
+    return;
+  }
+  await logDate(dateStr);
+}
+
+async function logDate(dateStr) {
+  await fetch('/cycle_log', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({period_start_date: dateStr})
+  });
+  await load();
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+  list.innerHTML = '';
+
+  if (!state.history.length) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  const sorted = [...state.history].sort().reverse();
+  sorted.forEach((dateStr, i) => {
+    const li = document.createElement('li');
+    const label = document.createElement('span');
+    label.textContent = prettyDate(dateStr);
+    li.appendChild(label);
+
+    if (i < sorted.length - 1) {
+      const gapDays = Math.round(
+        (new Date(dateStr) - new Date(sorted[i + 1])) / 86400000
+      );
+      const gap = document.createElement('span');
+      gap.className = 'gap';
+      gap.textContent = `${gapDays} days since previous`;
+      li.appendChild(gap);
+    } else {
+      const gap = document.createElement('span');
+      gap.className = 'gap';
+      gap.textContent = 'earliest logged';
+      li.appendChild(gap);
+    }
+
+    const del = document.createElement('button');
+    del.className = 'del';
+    del.textContent = '✕';
+    del.title = 'Remove this entry';
+    del.onclick = async () => {
+      if (!confirm(`Remove the logged period start on ${prettyDate(dateStr)}?`)) return;
+      await fetch('/cycle_delete', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({period_start_date: dateStr})
+      });
+      await load();
+    };
+    li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('prev-month').onclick = () => {
+  viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  renderMonth();
+};
+document.getElementById('next-month').onclick = () => {
+  viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  renderMonth();
+};
+document.getElementById('log-btn').onclick = async () => {
+  const val = document.getElementById('log-date').value;
+  if (!val) return;
+  if (val > state.today) { alert("You can't log a period start in the future."); return; }
+  const btn = document.getElementById('log-btn');
+  btn.disabled = true; btn.textContent = 'Logging…';
+  try { await logDate(val); } finally { btn.disabled = false; btn.textContent = 'Log period'; }
+};
+
+load();
+</script>
+</body>
+</html>

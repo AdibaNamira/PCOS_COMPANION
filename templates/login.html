@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PCOS Companion — Sign in</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-stack); background: var(--bg); color: var(--text); padding: 20px;
+  }
+  .card {
+    background: var(--card); border-radius: 18px; width: 100%; max-width: 380px;
+    box-shadow: 0 8px 34px rgba(122, 64, 121, 0.13); overflow: hidden;
+  }
+
+  /* --- plum header --- */
+  .head { background: var(--accent); padding: 24px 22px; }
+  .head.centred { text-align: center; }
+  .head .mark {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.18);
+    margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 21px;
+  }
+  .head h1 { font-size: 1.12em; margin: 0; font-weight: 600; color: #fff; }
+  .head .sub { font-size: 0.8em; color: var(--accent-soft); margin-top: 4px; line-height: 1.45; }
+
+  /* Trust points use apricot: against a solid plum header the plum-family
+     accents disappear, and apricot is the one palette colour that stays
+     legible there. */
+  .trust { margin-top: 14px; }
+  .trust div { display: flex; gap: 9px; align-items: flex-start; margin-bottom: 9px; }
+  .trust div:last-child { margin-bottom: 0; }
+  .trust .ic { color: var(--apricot); font-size: 0.95em; line-height: 1.4; flex-shrink: 0; }
+  .trust span.txt { font-size: 0.76em; color: #f0dcee; line-height: 1.45; }
+
+  .body { padding: 22px; }
+  label { display: block; font-size: 0.75em; color: var(--text-soft); margin-bottom: 5px; }
+  input {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.93em; font-family: inherit; background: var(--bg); color: var(--text);
+  }
+  input:focus { outline: none; border-color: var(--accent); background: var(--card); }
+  .field { margin-bottom: 13px; }
+
+  /* --- password strength --- */
+  #strength { display: flex; gap: 4px; align-items: center; margin-top: 7px; }
+  #strength .bar { flex: 1; height: 3px; border-radius: 2px; background: var(--border); }
+  #strength .bar.on-weak { background: var(--danger); }
+  #strength .bar.on-ok { background: var(--warn-border); }
+  #strength .bar.on-good { background: var(--success); }
+  #strength .label { font-size: 0.68em; margin-left: 4px; white-space: nowrap; }
+
+  button.primary {
+    width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none;
+    border-radius: 11px; font-size: 0.95em; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  button.primary:hover { background: var(--accent-dark); }
+  button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .switch { text-align: center; margin-top: 15px; font-size: 0.85em; color: var(--text-soft); }
+  .switch a { color: var(--accent); cursor: pointer; font-weight: 600; text-decoration: none; }
+
+  .msg { padding: 10px 13px; border-radius: 10px; font-size: 0.82em; margin-bottom: 14px; line-height: 1.45; }
+  .msg.error { background: var(--danger-bg); color: var(--danger); }
+  .msg.info { background: var(--success-bg); color: var(--success-text); }
+  .hidden { display: none !important; }
+
+  /* --- 2FA step --- */
+  .steps { display: flex; gap: 4px; margin-bottom: 18px; }
+  .steps div { flex: 1; height: 3px; border-radius: 2px; background: var(--accent-soft); }
+  .steps div.done { background: var(--accent); }
+  .icon-round {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 12px;
+  }
+  h2 { font-size: 1.05em; margin: 0 0 5px; font-weight: 600; }
+  p.lead { font-size: 0.81em; color: var(--text-soft); line-height: 1.5; margin: 0 0 15px; }
+
+  .code-row { display: flex; gap: 6px; margin-bottom: 15px; }
+  .code-row input {
+    flex: 1; aspect-ratio: 0.78; text-align: center; font-size: 1.2em; font-weight: 600;
+    padding: 0; border: 1px solid var(--accent-line); border-radius: 9px; min-width: 0;
+  }
+  .code-row input:focus { border-width: 2px; border-color: var(--accent); }
+  .code-row input.filled { border-color: var(--accent-line); }
+
+  .foot { text-align: center; margin-top: 12px; font-size: 0.78em; color: var(--text-soft); }
+  .foot a { color: var(--accent); cursor: pointer; font-weight: 600; text-decoration: none; }
+  .note { font-size: 0.72em; color: var(--text-faint); text-align: center;
+          padding: 0 22px 20px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- ============ STEP 1: sign in ============ -->
+  <div id="view-login">
+    <div class="head centred">
+      <div class="mark">🌸</div>
+      <h1>Welcome back</h1>
+      <div class="sub">Your conversations are where you left them</div>
+    </div>
+    <div class="body">
+      <div id="login-msg" class="msg hidden"></div>
+      <div class="field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <button class="primary" id="login-btn">Sign in</button>
+      <div class="switch">New here? <a id="to-signup">Create an account</a></div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 1b: create account ============ -->
+  <div id="view-signup" class="hidden">
+    <div class="head">
+      <h1>Create your account</h1>
+      <div class="trust">
+        <div><span class="ic">🔒</span><span class="txt">Private to you and the research team running this study. Not shared beyond that.</span></div>
+        <div><span class="ic">📋</span><span class="txt">Only information it can verify — it tells you when it isn't sure.</span></div>
+        <div><span class="ic">🗑️</span><span class="txt">Delete everything you've stored, any time.</span></div>
+      </div>
+    </div>
+    <div class="body">
+      <div id="signup-msg" class="msg hidden"></div>
+      <div class="field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="signup-password">Choose a password</label>
+        <input type="password" id="signup-password" autocomplete="new-password" placeholder="At least 8 characters">
+        <div id="strength">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="label" id="strength-label"></span>
+        </div>
+      </div>
+      <button class="primary" id="signup-btn">Continue</button>
+      <div class="switch">Already have an account? <a id="to-login">Sign in</a></div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 2: email code ============ -->
+  <div id="view-verify" class="hidden">
+    <div class="body">
+      <div class="steps"><div class="done"></div><div class="done"></div><div></div></div>
+      <div class="icon-round">✉️</div>
+      <h2>Check your email</h2>
+      <p class="lead" id="verify-lead">Enter the 6-digit code we sent you.</p>
+      <div id="verify-msg" class="msg hidden"></div>
+      <div class="code-row">
+        <input type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code">
+        <input type="text" inputmode="numeric" maxlength="1">
+        <input type="text" inputmode="numeric" maxlength="1">
+        <input type="text" inputmode="numeric" maxlength="1">
+        <input type="text" inputmode="numeric" maxlength="1">
+        <input type="text" inputmode="numeric" maxlength="1">
+      </div>
+      <button class="primary" id="verify-btn">Verify</button>
+      <div class="foot">
+        <a id="resend">Send a new code</a> · <span id="countdown">expires in 10:00</span>
+      </div>
+      <div class="foot"><a id="start-over">Use a different account</a></div>
+    </div>
+  </div>
+
+  <div class="note">A prototype for PCOS support — not a substitute for medical care.</div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const views = { login: $('view-login'), signup: $('view-signup'), verify: $('view-verify') };
+
+function show(name) {
+  Object.values(views).forEach(v => v.classList.add('hidden'));
+  views[name].classList.remove('hidden');
+}
+
+function setMsg(id, text, kind) {
+  const el = $(id);
+  if (!text) { el.classList.add('hidden'); return; }
+  el.textContent = text;
+  el.className = 'msg ' + kind;
+}
+
+async function post(url, body) {
+  const res = await fetch(url, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body || {})
+  });
+  return { ok: res.ok, data: await res.json() };
+}
+
+/* ---- switching between sign in and sign up ---- */
+$('to-signup').onclick = () => { setMsg('signup-msg', null); show('signup'); $('signup-email').focus(); };
+$('to-login').onclick  = () => { setMsg('login-msg', null);  show('login');  $('login-email').focus(); };
+
+/* ---- password strength (mirrors the 8-char minimum the server enforces) ---- */
+$('signup-password').addEventListener('input', e => {
+  const v = e.target.value;
+  const bars = document.querySelectorAll('#strength .bar');
+  const label = $('strength-label');
+  bars.forEach(b => b.className = 'bar');
+
+  if (!v) { label.textContent = ''; return; }
+
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (v.length >= 12) score++;
+  if (/[^a-zA-Z]/.test(v) && /[a-zA-Z]/.test(v)) score++;
+
+  if (v.length < 8) {
+    bars[0].classList.add('on-weak');
+    label.textContent = 'Too short'; label.style.color = 'var(--danger)';
+  } else if (score <= 1) {
+    bars[0].classList.add('on-ok');
+    label.textContent = 'Weak'; label.style.color = 'var(--warn-border)';
+  } else if (score === 2) {
+    bars[0].classList.add('on-ok'); bars[1].classList.add('on-ok');
+    label.textContent = 'Okay'; label.style.color = 'var(--warn-border)';
+  } else {
+    bars.forEach(b => b.classList.add('on-good'));
+    label.textContent = 'Good'; label.style.color = 'var(--success-text)';
+  }
+});
+
+/* ---- step 1 submit ---- */
+async function submitCredentials(mode) {
+  const msgId = mode === 'login' ? 'login-msg' : 'signup-msg';
+  const btn = $(mode === 'login' ? 'login-btn' : 'signup-btn');
+  const email = $(mode === 'login' ? 'login-email' : 'signup-email').value.trim();
+  const password = $(mode === 'login' ? 'login-password' : 'signup-password').value;
+
+  setMsg(msgId, null);
+  if (!email || !password) { setMsg(msgId, 'Please fill in both fields.', 'error'); return; }
+
+  const original = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Please wait…';
+  try {
+    const { ok, data } = await post(mode === 'login' ? '/login' : '/signup', { email, password });
+    if (!ok) { setMsg(msgId, data.message || 'Something went wrong.', 'error'); return; }
+    $('verify-lead').textContent = data.message;
+    setMsg('verify-msg', null);
+    show('verify');
+    startCountdown();
+    codeInputs[0].focus();
+  } catch (e) {
+    setMsg(msgId, "Couldn't reach the server. Is it still running?", 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = original;
+  }
+}
+$('login-btn').onclick  = () => submitCredentials('login');
+$('signup-btn').onclick = () => submitCredentials('signup');
+
+['login-password', 'signup-password'].forEach(id => {
+  $(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitCredentials(id === 'login-password' ? 'login' : 'signup');
+  });
+});
+
+/* ---- six-box code entry ---- */
+const codeInputs = Array.from(document.querySelectorAll('.code-row input'));
+
+codeInputs.forEach((input, i) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 1);
+    input.classList.toggle('filled', !!input.value);
+    if (input.value && i < codeInputs.length - 1) codeInputs[i + 1].focus();
+    if (codeInputs.every(x => x.value)) submitCode();
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !input.value && i > 0) codeInputs[i - 1].focus();
+    if (e.key === 'ArrowLeft' && i > 0) codeInputs[i - 1].focus();
+    if (e.key === 'ArrowRight' && i < codeInputs.length - 1) codeInputs[i + 1].focus();
+    if (e.key === 'Enter') submitCode();
+  });
+  input.addEventListener('paste', e => {
+    e.preventDefault();
+    const digits = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    digits.split('').forEach((d, k) => {
+      if (codeInputs[k]) { codeInputs[k].value = d; codeInputs[k].classList.add('filled'); }
+    });
+    if (digits.length === 6) submitCode();
+    else if (codeInputs[digits.length]) codeInputs[digits.length].focus();
+  });
+});
+
+function clearCode() {
+  codeInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+  codeInputs[0].focus();
+}
+
+let submitting = false;
+async function submitCode() {
+  if (submitting) return;
+  const code = codeInputs.map(i => i.value).join('');
+  if (code.length !== 6) { setMsg('verify-msg', 'Please enter all 6 digits.', 'error'); return; }
+
+  submitting = true;
+  $('verify-btn').disabled = true;
+  setMsg('verify-msg', null);
+  try {
+    const { ok, data } = await post('/verify', { code });
+    if (!ok) { setMsg('verify-msg', data.message || "That didn't work.", 'error'); clearCode(); return; }
+    window.location.href = '/';
+  } finally {
+    submitting = false;
+    $('verify-btn').disabled = false;
+  }
+}
+$('verify-btn').onclick = submitCode;
+
+/* ---- countdown: the server expires codes after 10 minutes, so say so ---- */
+let timer = null;
+function startCountdown() {
+  clearInterval(timer);
+  let left = 600;
+  const el = $('countdown');
+  const tick = () => {
+    if (left <= 0) {
+      clearInterval(timer);
+      el.textContent = 'code expired';
+      return;
+    }
+    const m = Math.floor(left / 60), s = String(left % 60).padStart(2, '0');
+    el.textContent = `expires in ${m}:${s}`;
+    left--;
+  };
+  tick();
+  timer = setInterval(tick, 1000);
+}
+
+$('resend').onclick = async () => {
+  const { ok, data } = await post('/resend', {});
+  setMsg('verify-msg', data.message || 'A new code is on its way.', ok ? 'info' : 'error');
+  if (ok) { clearCode(); startCountdown(); }
+};
+
+$('start-over').onclick = () => {
+  clearInterval(timer);
+  clearCode();
+  $('login-password').value = '';
+  $('signup-password').value = '';
+  show('login');
+};
+</script>
+</body>
+</html>
